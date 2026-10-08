@@ -1,0 +1,162 @@
+
+
+'''FUNÇÃO 1 - cadastrar_habito():
+    
+    1. Pedir o NOME do hábito
+       - SE estiver em branco, pedir novamente até ser válido
+    
+    2. Pedir a FREQUÊNCIA (ex: quantos dias por semana ou mês)
+    
+    3. Pedir os HORÁRIOS do hábito
+    
+    4. Definir valores INICIAIS do sistema:
+       - Sequência (streak) = 0
+       - Última conclusão = "Nenhuma"
+    
+    5. Mostrar um resumo das informações na tela
+    
+    6. Pedir CONFIRMAÇÃO do usuário ("Os dados estão corretos? [S/N]")
+       - SE sim:
+           * Guardar o hábito na lista de hábitos
+           * Exibir mensagem de sucesso
+       - SE não:
+           * Cancelar ou recomeçar o cadastro
+           
+FIM DA FUNÇÃO'''
+
+
+'''FUNÇÃO 2 - consultar_habitos():
+    
+    1. VERIFICAR se a lista de hábitos está vazia:
+       - SE estiver vazia:
+           * Exibir mensagem: "Nenhum hábito cadastrado ainda."
+           * RETORNAR ao menu principal
+    
+    2. SENÃO (se houver hábitos na lista):
+       - Exibir uma LISTA RESUMIDA de todos os hábitos (ex: número e nome de cada um)
+       
+    3. Perguntar ao usuário se ele deseja ver os detalhes de um hábito específico:
+       - Pedir o NOME (ou número) do hábito
+       - SE o usuário escolher não detalhar nenhum (ou apertar Enter):
+           * RETORNAR ao menu principal
+           
+    4. SE o hábito escolhido existir na lista:
+       - Exibir a FICHA COMPLETA com todos os atributos:
+           * Nome do hábito
+           * Frequência (semanal/mensal)
+           * Horários definidos
+           * Sequência atual (streak)
+           * Data/status da última conclusão
+           
+    5. SE o hábito não for encontrado:
+       - Exibir mensagem: "Hábito não localizado na sua lista."
+
+FIM DA FUNÇÃO'''
+
+'''FUNÇÃO 3 - concluir_habito():
+    
+    1. VERIFICAR se a lista de hábitos está vazia:
+       - SE estiver vazia:
+           * Exibir mensagem: "Nenhum hábito cadastrado para concluir."
+           * RETORNAR ao menu principal
+    
+    2. Exibir a LISTA RESUMIDA com número e nome dos hábitos
+       
+    3. Pedir ao usuário para digitar o NOME (ou número) do hábito:
+       - (Lembrete na tela: "Digite 'menu' a qualquer momento para voltar")
+       - SE o usuário digitar "menu" OU pressionar Enter em branco:
+           * RETORNAR ao menu principal
+           
+    4. SE o hábito for localizado na lista:
+       - Somar +1 no Streak (streak = streak + 1)
+       - Registrar a Data de Hoje na Última Conclusão
+       - Exibir: "Hábito concluído com sucesso!"
+       
+       - VERIFICAR GAMIFICAÇÃO:
+           * SE streak == 3: Exibir "🥉 Conquista: 'Iniciante em Ação' (3 dias)!"
+           * SE streak == 7: Exibir "🥈 Conquista: 'Foco Inabalável' (1 semana)!"
+           * SE streak == 21: Exibir "🥇 Conquista: 'Mestre da Rotina' (21 dias)!"
+           * SE streak == 30: Exibir "🏆 Conquista: 'Lenda do Foco' (1 mês)!"
+           * SENÃO: Exibir mensagem de incentivo padrão com o streak atual
+           
+    5. SE o hábito não for encontrado:
+       - Exibir: "Hábito não localizado na sua lista."
+
+FIM DA FUNÇÃO'''
+
+'''FUNÇÃO 4 - gerenciar_habito():
+
+    1. VERIFICAR se a lista de hábitos ativos está vazia:
+       - SE estiver vazia:
+           * Exibir: "Nenhum hábito ativo encontrado."
+           * RETORNAR ao menu principal
+
+    2. Exibir LISTA RESUMIDA dos hábitos ativos
+
+    3. Pedir ao usuário para selecionar um HÁBITO pelo nome ou número:
+       - (Lembrete: Digite 'menu' para voltar)
+       - SE digitar "menu" ou pressionar Enter em branco:
+           * RETORNAR ao menu principal
+
+    4. SE o hábito for localizado:
+       - Exibir as opções de ação:
+           [1] Arquivar (Preserva o histórico, mas remove da rotina ativa)
+           [2] Excluir Definitivamente (Apaga o cadastro e dados)
+           [3] Cancelar
+
+       - SE a opção escolhida for "1" (ARQUIVAR):
+           * Alterar o status do hábito para "Arquivado"
+           * GRAVAR NO HISTÓRICO: "[Data/Hora] Hábito '[Nome]' foi arquivado."
+           * Exibir: "Hábito arquivado com sucesso!"
+
+       - SE a opção escolhida for "2" (EXCLUIR):
+           * Pedir CONFIRMAÇÃO DE SEGURANÇA: "Digite 'CONFIRMAR' para excluir definitivamente:"
+           * SE o usuário digitar "CONFIRMAR":
+               - GRAVAR NO HISTÓRICO: "[Data/Hora] Hábito '[Nome]' foi excluído permanentemente."
+               - Apagar o hábito da lista
+               - Exibir: "Hábito excluído com sucesso."
+           * SENÃO:
+               - Exibir: "Ação cancelada. O hábito não foi excluído."
+
+    5. SE o hábito NÃO for localizado:
+       - Exibir: "Hábito não localizado na sua lista."
+
+FIM DA FUNÇÃO'''
+
+'''FUNÇÃO 5 - consultar_historico():
+    
+    1. VERIFICAR se o registro de histórico possui eventos:
+       - SE o histórico estiver vazio:
+           * Exibir mensagem: "Nenhum registro encontrado no histórico."
+           * RETORNAR ao menu principal
+    
+    2. Exibir o SUBMENU de Histórico:
+       [1] Ver Linha do Tempo Geral (todas as atividades em ordem cronológica)
+       [2] Ver Histórico Detalhado de um Hábito Específico
+       (Lembrete: Digite 'menu' a qualquer momento para voltar)
+       
+    3. Solicitar a OPÇÃO do usuário:
+       - SE digitar "menu" ou pressionar Enter em branco:
+           * RETORNAR ao menu principal
+           
+    4. SE a opção escolhida for "1" (LINHA DO TEMPO GERAL):
+       - Imprimir a lista de todos os eventos registrados:
+           * Formato: [Data e Hora] - [Ação] - [Detalhes / Hábito]
+           * Exemplo: [05/10/2026 08:30] - Conclusão - "Beber água" (Streak: 5 dias)
+           * Exemplo: [05/10/2026 10:00] - Exclusão - "Estudar Python"
+           
+    5. SE a opção escolhida for "2" (HISTÓRICO POR HÁBITO):
+       - Solicitar o NOME ou número do hábito que deseja consultar
+       - SE digitar "menu":
+           * RETORNAR ao menu principal
+       - SE o hábito for localizado (seja ele Ativo, Arquivado ou Excluído):
+           * Exibir Ficha de Histórico do Hábito:
+               - Data de Cadastro
+               - Status Atual (Ativo / Arquivado / Excluído)
+               - Total de Conclusões Realizadas
+               - Maior Streak (Sequência) Alcançado
+               - Lista com as datas de todas as conclusões
+       - SE o hábito não for encontrado no histórico:
+           * Exibir mensagem: "Nenhum histórico localizado para este hábito."
+
+FIM DA FUNÇÃO'''
