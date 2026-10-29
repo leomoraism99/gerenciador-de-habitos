@@ -1,5 +1,32 @@
 from datetime import datetime, date
 
+def exibir_trofeu(streak):
+    texto_streak = f"STREAK: {streak}".center(12)
+    trofeu = rf"""    ____                              ____
+  ,',,-.`.  __....---------....__  ,',-..`.
+ /.//   ) \'...---'''''````---...`/ (   \\.\
+:.::   '-._`--...._________....--'_,-'   ::.:
+|.||     |::`--...._______....--''.|     ||.|
+:.::     |:::.................    .|     ;;.;
+ \.\\    |:::.................    .|    //./
+  `.`:   |:::.................    .|   ,','
+    `.`. |:::.................    .| ,','
+      `.`::::.................    .;','
+       `..\:::...............   ./,'
+   (\_,'//  `::............ ..,'\\`._/)
+    `--''     `:.........  ,'    ``--'
+                 \...... /
+                   :... :
+             ______|... |______
+           ,'   ,'.`----' `::. `.
+          ,'____`-..____..-' ___ `.
+         / _______________________ \
+        : |°      PARABÉNS!!     °| :
+        | |      {texto_streak}     | |
+       .: |o_____________________o| :
+      .::\_________________________/::."""
+    print(trofeu)
+
 def pedir_entrada(mensagem):
     entrada = input(mensagem).strip()
     if entrada.lower() == 'menu':
@@ -59,7 +86,7 @@ def cadastrar_habito():
 
     if opcao_freq == '1':
         frequencia = "Diário"
-        meta_ciclo = 1
+        meta_ciclo = 7
     elif opcao_freq == '2':
         frequencia = "Semanal"
         entrada = pedir_entrada("Quantas vezes por semana deseja realizar este hábito? ")
@@ -115,7 +142,7 @@ def consultar_habito():
     if entrada is None:
      return
 
-menu_pos_acao()
+    menu_pos_acao()
         
 def concluir_habito():
     print("\n--- CONCLUIR HÁBITO ---\n")
@@ -128,7 +155,7 @@ def concluir_habito():
         print(f"[{i}] {habito['nome']} - Progresso: {habito['progresso_ciclo']}/{habito['meta_ciclo']}")
         print()
     print()
-    entrada = pedir_entrada("Digite o número do hábito que deseja fazer o check de hoje! ")
+    entrada = pedir_entrada("Digite o número correspondente ao hábito que deseja fazer o check de hoje! ")
     if entrada is None:
         return
     if not entrada.isdigit():
@@ -138,16 +165,15 @@ def concluir_habito():
     
     if 0 <= indice < len(lista_habitos):
         habito_selecionado = lista_habitos[indice]
+        habito_selecionado['progresso_ciclo'] += 1
         if habito_selecionado['progresso_ciclo'] >= habito_selecionado['meta_ciclo']:
-            print(f"\n🛑 O hábito '{habito_selecionado['nome']}' já atingiu a meta deste ciclo!")
+            habito_selecionado['streak'] += 1
+            print(f"\nParabéns! Você atingiu sua meta de '{habito_selecionado['nome']}'!")
+            exibir_trofeu(habito_selecionado['streak'])
+
+            habito_selecionado['progresso_ciclo'] = 0
         else:
-            habito_selecionado['progresso_ciclo'] += 1
-    
-            if habito_selecionado['progresso_ciclo'] >= habito_selecionado['meta_ciclo']:
-                habito_selecionado['streak'] += 1
-                print(f"\n🎉 Parabéns! Você atingiu sua meta de '{habito_selecionado['nome']}'!")
-            else:
-                print(f"\n✅ Check de hoje feito!\nProgresso atual: {habito_selecionado['progresso_ciclo']}/{habito_selecionado['meta_ciclo']}")
+            print(f"\n✅ Check de hoje feito!\nProgresso atual: {habito_selecionado['progresso_ciclo']}/{habito_selecionado['meta_ciclo']}")
     else:
         print("\nOpção inválida! Selecione um número da lista.")
         return
@@ -208,4 +234,5 @@ def menu_principal():
         else:
             print('Opção inválida. Por favor, escolha uma opção válida.')
 menu_principal()
+
 
