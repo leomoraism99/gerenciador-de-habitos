@@ -68,7 +68,7 @@ def menu_pos_acao():
         print("\nO que deseja fazer agora?")
         print("1. ➕  Cadastrar outro hábito")
         print("2. 🏠  Ir para o Menu Principal")
-        print("3. 🗑️  Excluir algum hábito?")
+        print("3. 🗑️   Excluir algum hábito?")
         print("4. ✅  Concluir algum hábito?")
         print("5. 📋  Consultar hábito")
 

@@ -21,16 +21,3 @@
   │      │                 │  [ Fim do Programa ]   │
   └──────┴─────────────────┴────────────────────────┘
   '''
-'''Olhar para a lista: Primeiro, você precisa de ver quais hábitos existem e qual é o número de cada um.
-
-Escolher o número: Você diz: "Quero marcar o hábito número 1".
-
-Pegar o hábito na lista: O programa precisa de ir até à memória e encontrar exatamente o hábito 1.
-
-Somar +1 no progresso: Se você já tinha feito 0/3, agora você fez 1/3.
-
-Verificar se atingiu a meta:
-
-Se a sua meta era 3 e você chegou a 3 (3/3)... Parabéns! Você completou o ciclo!
-
-Como completou a meta, a sua sequência (streak) ganha +1 ponto! 🔥'''
