@@ -33,15 +33,44 @@ def pedir_entrada(mensagem):
         return None
     return entrada
 
+def excluir_habito(habitos):
+    if not habitos:
+        print("\n❌   Não há hábitos registados para excluir.")
+        return
+
+    print("\n--- EXCLUIR HÁBITO ---")
+    print("\nDigite 'menu' a qualquer momento para voltar ao menu principal.")
+    for i, habito in enumerate(habitos, 1):
+        print(f"{i}. {habito['nome']} (Streak atual: {habito['streak']})")
+    entrada = pedir_entrada("\nDigite o número que corresponde ao hábito que deseja excluir (ou 0 para cancelar): ")
+    if entrada.lower() == "menu" or entrada == "0":
+        print("Operação cancelada.")
+        return
+
+    try:
+        escolha = int(entrada)
+        if escolha == 0:
+            print("Operação cancelada.")
+            return
+        if 1 <= escolha <= len(habitos):
+            habito_removido = habitos.pop(escolha - 1)
+            print(f"🗑️   Hábito '{habito_removido['nome']}' excluído com sucesso!   🗑️")
+        else:
+            print("❌ Número inválido. Escolha um número da lista.")
+            
+    except ValueError:
+        print("❌ Por favor, introduza apenas números válidos.")
+
+    menu_pos_acao()
 
 def menu_pos_acao():
     while True:
         print("\nO que deseja fazer agora?")
-        print("1. Cadastrar outro hábito")
-        print("2. Ir para o Menu Principal")
-        print("3. Excluir algum hábito?")
-        print("4. Concluir algum hábito?")
-        print("5. Consultar hábito")
+        print("1. ➕  Cadastrar outro hábito")
+        print("2. 🏠  Ir para o Menu Principal")
+        print("3. 🗑️  Excluir algum hábito?")
+        print("4. ✅  Concluir algum hábito?")
+        print("5. 📋  Consultar hábito")
 
         opcao_pos = input("Escolha uma opção: ").strip()
 
@@ -51,7 +80,7 @@ def menu_pos_acao():
         elif opcao_pos == "2":
             break
         elif opcao_pos == "3":
-            excluir_habito()
+            excluir_habito(lista_habitos)
             break
         elif opcao_pos == "4":
             concluir_habito()
@@ -60,7 +89,7 @@ def menu_pos_acao():
             consultar_habito()
             break
         else:
-            print("Opção inválida!")
+            print("❌  Opção inválida!")
 
 
 def exibir_cabecalho(titulo):
@@ -71,7 +100,7 @@ def exibir_cabecalho(titulo):
 
 def cadastrar_habito():
     print("\n--- CADASTRAR NOVO HÁBITO ---\n")
-    print("(Digite 'menu' a qualquer momento para voltar ao menu pincipal.)")
+    print("\n(Digite 'menu' a qualquer momento para voltar ao menu pincipal.)")
 
     nome= pedir_entrada("Digite o nome do hábito: ")
     if nome is None or nome == "":
@@ -93,7 +122,7 @@ def cadastrar_habito():
         if entrada is None:
             return
         if not entrada.isdigit():
-            print("\nDigite apenas números para a meta!")
+            print("\n❌  Digite apenas números para a meta!")
             return
         meta_ciclo = int(entrada)
     elif opcao_freq == '3':
@@ -102,11 +131,11 @@ def cadastrar_habito():
         if entrada is None:
             return
         if not entrada.isdigit():
-            print("\nDigite apenas números para a meta!")
+            print("\n❌  Digite apenas números para a meta!")
             return
         meta_ciclo = int(entrada)
     else:
-        print("Opção inválida!")
+        print("❌  Por favor, escolha uma opção válida.")
         return
 
     novo_habito = {
@@ -120,7 +149,7 @@ def cadastrar_habito():
         "data_inicio": date.today().isoformat()
     }
     lista_habitos.append(novo_habito)
-    print(f"\nHábito '{nome}' cadastrado com sucesso!\n")
+    print(f"\n✅   Hábito '{nome}' cadastrado com sucesso!\n")
     menu_pos_acao()
 
 lista_habitos = []
@@ -128,9 +157,9 @@ historico_eventos = []
 
 def consultar_habito():
     print("\n--- SEUS HÁBITOS ---\n")
-    print("(Digite 'menu' a qualquer momento para voltar ao menu pincipal.)")
+    print("\n(Digite 'menu' a qualquer momento para voltar ao menu pincipal.)")
     if not lista_habitos:
-        print("Nenhum hábito cadastrado.")
+        print("❌  Nenhum hábito cadastrado.")
         return
     for i, habito in enumerate(lista_habitos, start=1):
         print(f"[{i}] {habito['nome']}")
@@ -146,11 +175,11 @@ def consultar_habito():
         
 def concluir_habito():
     print("\n--- CONCLUIR HÁBITO ---\n")
-    print("(Digite 'menu' a qualquer momento para voltar ao menu pincipal.)")
+    print("\n(Digite 'menu' a qualquer momento para voltar ao menu pincipal.)")
     if not lista_habitos:
-        print("Nenhum hábito cadastrado.")
+        print("❌  Nenhum hábito cadastrado.")
         return
-    print("Seus hábitos atuais:\n")
+    print("\nSeus hábitos atuais:\n")
     for i, habito in enumerate(lista_habitos, start=1):
         print(f"[{i}] {habito['nome']} - Progresso: {habito['progresso_ciclo']}/{habito['meta_ciclo']}")
         print()
@@ -159,7 +188,7 @@ def concluir_habito():
     if entrada is None:
         return
     if not entrada.isdigit():
-        print("\nOpção inválida! Selecione um número da lista.")
+        print("\n❌  Opção inválida! Selecione um número da lista.")
         return
     indice = int(entrada) - 1
     
@@ -175,7 +204,7 @@ def concluir_habito():
         else:
             print(f"\n✅ Check de hoje feito!\nProgresso atual: {habito_selecionado['progresso_ciclo']}/{habito_selecionado['meta_ciclo']}")
     else:
-        print("\nOpção inválida! Selecione um número da lista.")
+        print("\n❌  Opção inválida! Selecione um número da lista.")
         return
     menu_pos_acao()
 
@@ -204,16 +233,16 @@ def menu_principal():
     print("O seu diário de evolução pessoal e acompanhamento")
     print("de metas diárias, streaks e conquistas.\n")
     
-    input("Pressione ENTER para aceder ao menu principal...\n")
+    input("Pressione ENTER para prosseguir ao menu principal...\n")
     while True:
         vrf_rnv_ciclos()
         exibir_cabecalho("MENU PRINCIPAL")
-        print('1. Cadastrar hábito')
-        print('2. Consultar hábito')
-        print('3. Concluir hábito')
-        print('4. Gerenciar hábitos (Excluir, Arquivar)')
-        print('5. Consultar histórico de hábitos')
-        print('6. Sair')
+        print('1. ➕  Cadastrar hábito')
+        print('2. 📋  Consultar hábito')
+        print('3. ✅  Concluir hábito')
+        print('4. 🗑️   Excluir hábito')
+        print('5. 🗓️   Consultar histórico de hábitos')
+        print('6. 👋  Sair')
         opcao = input('Escolha uma opção: ')
         if opcao == '1':
             print("'Cadastrar hábito' selecionado.")
@@ -225,14 +254,15 @@ def menu_principal():
             print("'Concluir hábito' selecionado.")
             concluir_habito()
         elif opcao == '4':
-            print("'Gerenciar hábitos' selecionado.")
+            print("'Excluir hábito' selecionado.")
+            excluir_habito(lista_habitos)
         elif opcao == '5':
             print("'Consultar histórico de hábitos' selecionado.")
         elif opcao == '6':
-            print("'Sair' selecionado.")
+            print("Saindo...\n Continue forte, e faça do jeito que dá!! Até a próxima! 💪\n")
             break
         else:
-            print('Opção inválida. Por favor, escolha uma opção válida.')
+            print("❌  Por favor, escolha uma opção válida.")
 menu_principal()
 
 
