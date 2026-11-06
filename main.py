@@ -1,4 +1,27 @@
 from datetime import datetime, date
+import json
+import os
+
+ARQUIVO_DADOS = "habitos.json"
+
+def carregar_dados():
+    """Carrega os hábitos do ficheiro JSON, se ele existir."""
+    if os.path.exists(ARQUIVO_DADOS):
+        try:
+            with open(ARQUIVO_DADOS, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except json.JSONDecodeError:
+            print("⚠️ Erro ao ler o ficheiro de dados. A iniciar com lista vazia.")
+            return []
+    return []
+
+def salvar_dados(habitos):
+    """Guarda a lista atual de hábitos no ficheiro JSON."""
+    try:
+        with open(ARQUIVO_DADOS, "w", encoding="utf-8") as f:
+            json.dump(habitos, f, ensure_ascii=False, indent=4)
+    except Exception as e:
+        print(f"❌ Erro ao guardar os dados: {e}")
 
 def exibir_trofeu(streak):
     texto_streak = f"STREAK: {streak}".center(12)
@@ -54,6 +77,7 @@ def excluir_habito(habitos):
             return
         if 1 <= escolha <= len(habitos):
             habito_removido = habitos.pop(escolha - 1)
+            salvar_dados(habitos)
             print(f"🗑️   Hábito '{habito_removido['nome']}' excluído com sucesso!   🗑️")
         else:
             print("❌ Número inválido. Escolha um número da lista.")
@@ -91,12 +115,10 @@ def menu_pos_acao():
         else:
             print("❌  Opção inválida!")
 
-
 def exibir_cabecalho(titulo):
     print("\n" + "=" * 50)
     print(titulo.upper().center(50))
     print("=" * 50 + "\n")
-
 
 def cadastrar_habito():
     print("\n--- CADASTRAR NOVO HÁBITO ---\n")
@@ -149,6 +171,7 @@ def cadastrar_habito():
         "data_inicio": date.today().isoformat()
     }
     lista_habitos.append(novo_habito)
+    salvar_dados(lista_habitos)
     print(f"\n✅   Hábito '{nome}' cadastrado com sucesso!\n")
     menu_pos_acao()
 
@@ -195,6 +218,7 @@ def concluir_habito():
     if 0 <= indice < len(lista_habitos):
         habito_selecionado = lista_habitos[indice]
         habito_selecionado['progresso_ciclo'] += 1
+        salvar_dados(lista_habitos)
         if habito_selecionado['progresso_ciclo'] >= habito_selecionado['meta_ciclo']:
             habito_selecionado['streak'] += 1
             print(f"\nParabéns! Você atingiu sua meta de '{habito_selecionado['nome']}'!")
@@ -229,6 +253,7 @@ def vrf_rnv_ciclos():
         habito["data_inicio"] = hoje.isoformat()
 
 def menu_principal():
+    habitos = carregar_dados()
     exibir_cabecalho("GERENCIADOR DE HÁBITOS")
     print("O seu diário de evolução pessoal e acompanhamento")
     print("de metas diárias, streaks e conquistas.\n")

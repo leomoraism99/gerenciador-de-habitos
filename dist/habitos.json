@@ -1,0 +1,12 @@
+[
+    {
+        "nome": "correr",
+        "frequencia": "Diário",
+        "meta_ciclo": 7,
+        "progresso_ciclo": 7,
+        "streak": 0,
+        "ultima_conclusao": null,
+        "status": "ativo",
+        "data_inicio": "2026-11-03"
+    }
+]
